@@ -25,9 +25,10 @@
 
 
 ## Technologies Used
-- .Net 7 	- version 1.0
-- Angular 14 	- version 2.0
-- NodeJS 	- version 3.0
+- .Net 7 	- version 7.0.4
+- Angular 	- version 14.2.11
+- NodeJS 	- version 18.14.0
+- NodeVersionManager (NVM)
 
 
 ## Features
