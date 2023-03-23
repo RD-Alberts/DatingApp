@@ -21,7 +21,8 @@ if (app.Environment.IsDevelopment())
 }
 //always needs to do this because client and api run on different localhost (use client localhost)
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200"));
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
