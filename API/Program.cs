@@ -10,6 +10,7 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -18,6 +19,8 @@ if (app.Environment.IsDevelopment())
 {
 
 }
+//always needs to do this because client and api run on different localhost (use client localhost)
+app.UseCors(builder => builder.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200"));
 
 app.MapControllers();
 
