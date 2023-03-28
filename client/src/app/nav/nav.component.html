@@ -1,3 +1,64 @@
+<div class="navbar bg-base-100">
+    <div class="navbar-start">
+      <a class="btn btn-ghost normal-case text-xl">Dating App</a>
+    </div>
+    <div class="navbar-center hidden lg:flex" *ngIf="accountService.currentUser$ | async">
+      <ul class="menu menu-horizontal items-center">
+        <li class="font-bold text-xl p-2 hover:text-primary ease-in-out transition-all duration-150 mx-2 rounded-md cursor-pointer">Matches</li>
+        <li class="font-bold text-xl p-2 hover:text-primary ease-in-out transition-all duration-150 mx-2 rounded-md cursor-pointer">Lists</li>
+        <li class="font-bold text-xl p-2 hover:text-primary ease-in-out transition-all duration-150 mx-2 rounded-md cursor-pointer">Messages</li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+        
+        <!-- Only visible if you are logged in -->
+        <div *ngIf="(accountService.currentUser$ | async)" class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              </div>
+            </label>
+            <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 w-52 cursor-pointer">
+              <li class="hover:bg-primary">
+                <a class="justify-between">
+                  Profile
+                  <span class="badge">New</span>
+                </a>
+              </li>
+              <li class="hover:bg-primary">Settings</li>
+              <li class="hover:bg-primary" (click)="logout()">Logout</li>
+            </ul>
+        </div>
+        <!-- Only visible if you are NOT logged in -->
+        <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="flex" (ngSubmit)="login()" autocomplete="off">
+            <input
+                name="username" 
+                [(ngModel)]="model.username"
+                class="input input-bordered  w-full max-w-xs" 
+                type="text" 
+                placeholder="Username">
+            <input 
+                name="password" 
+                [(ngModel)]="model.password"
+                class="input input-bordered  w-full max-w-xs" 
+                type="password" 
+                placeholder="Password">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">Dating App</a>
@@ -16,7 +77,7 @@
         </ul>
 
         <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle> Welcome user</a>
+            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome user</a>
             <div class="dropdown-menu mt-3" *dropdownMenu>
                 <a  class="dropdown-item">Edit Profile</a>
                 <a  class="dropdown-item"(click)="logout()">Logout</a>
@@ -39,4 +100,4 @@
             <button class="btn btn-outline-success" type="submit">Login</button>
         </form>
     </div>
-</nav>
+</nav> -->
