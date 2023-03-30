@@ -1,34 +1,12 @@
-<div class="navbar bg-base-100">
-    <div class="navbar-start">
-      <a class="btn btn-ghost normal-case text-xl">Dating App</a>
+ <div class="navbar bg-base-100 mx-auto drop-shadow-lg">
+    <div class="flex-1">
+      <a routerLink="/" class="flex items-center">
+        <img src="https://i.pinimg.com/originals/ec/16/40/ec1640c224a723afb4c210d282e4d603.png" class="mr-3 h-6 sm:h-9"
+          alt="Logo">
+        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Dating app</span>
+      </a>
     </div>
-    <div class="navbar-center hidden lg:flex" *ngIf="accountService.currentUser$ | async">
-      <ul class="menu menu-horizontal items-center">
-        <li class="font-bold text-xl p-2 hover:text-primary ease-in-out transition-all duration-150 mx-2 rounded-md cursor-pointer">Matches</li>
-        <li class="font-bold text-xl p-2 hover:text-primary ease-in-out transition-all duration-150 mx-2 rounded-md cursor-pointer">Lists</li>
-        <li class="font-bold text-xl p-2 hover:text-primary ease-in-out transition-all duration-150 mx-2 rounded-md cursor-pointer">Messages</li>
-      </ul>
-    </div>
-    <div class="navbar-end">
-        
-        <!-- Only visible if you are logged in -->
-        <div *ngIf="(accountService.currentUser$ | async)" class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
-            </label>
-            <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 w-52 cursor-pointer">
-              <li class="hover:bg-primary">
-                <a class="justify-between">
-                  Profile
-                  <span class="badge">New</span>
-                </a>
-              </li>
-              <li class="hover:bg-primary">Settings</li>
-              <li class="hover:bg-primary" (click)="logout()">Logout</li>
-            </ul>
-        </div>
+    <div class="flex-none gap-2">
         <!-- Only visible if you are NOT logged in -->
         <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="flex" (ngSubmit)="login()" autocomplete="off">
             <input
@@ -45,59 +23,22 @@
                 placeholder="Password">
             <button class="btn btn-primary" type="submit">Login</button>
         </form>
+         <!-- Only visible if you are logged in -->
+      <div class="sm:flex hidden" *ngIf="(accountService.currentUser$ | async) as user">
+        <h1>Welcome {{user.username | titlecase}}</h1>
+      </div>
+      <div class="dropdown dropdown-end" *ngIf="accountService.currentUser$ | async">
+        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+          <div class="w-12 rounded-full">
+            <img src="https://avatars.githubusercontent.com/u/113441481?s=400&u=b3922e0644fc97afdea0f44a2f6ee24a3967cb4e&v=4" />
+          </div>
+        </label>
+        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a routerLink="/members" routerLinkActive="active">Matches</a></li>
+          <li><a routerLink="/lists" routerLinkActive="active">Lists</a></li>
+          <li class="pb-2"><a routerLink="/messages" routerLinkActive="active">Messages</a></li>
+          <li (click)="logout()" class="border-t-2 border-slate-600"><a>Logout</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">Dating App</a>
-
-
-        <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser$ | async">
-            <li class="nav-item">
-                <a class="nav-link " href="#">Matches</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Lists</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link ">Messages</a>
-            </li>
-        </ul>
-
-        <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome user</a>
-            <div class="dropdown-menu mt-3" *dropdownMenu>
-                <a  class="dropdown-item">Edit Profile</a>
-                <a  class="dropdown-item"(click)="logout()">Logout</a>
-            </div>
-        </div>
-
-        <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-            <input
-                name="username" 
-                [(ngModel)]="model.username"
-                class="form-control me-2" 
-                type="text" 
-                placeholder="Username">
-            <input 
-                name="password" 
-                [(ngModel)]="model.password"
-                class="form-control me-2" 
-                type="password" 
-                placeholder="Password">
-            <button class="btn btn-outline-success" type="submit">Login</button>
-        </form>
-    </div>
-</nav> -->
