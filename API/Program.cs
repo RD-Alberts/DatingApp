@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,7 @@ builder.Services.AddIdentityServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-
-}
+app.UseMiddleware<ExceptionMiddleware>();
 
 //always needs to do this because client and api run on different localhost (use client localhost)
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200"));
