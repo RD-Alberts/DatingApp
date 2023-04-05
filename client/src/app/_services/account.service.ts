@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = 'https://localhost:7091/api/';
+  baseUrl = environment.apiUrl;
   // | means its an union type. Which means it can be one or more types. It fixes the null value problem
   private currentUserSource = new BehaviorSubject<User | null>(null);
   //$ means its an observable
