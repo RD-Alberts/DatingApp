@@ -1,1 +1,102 @@
-<p>member-detail works!</p>
+<div *ngIf="member" class=" cardflex flex-col flex-wrap">
+  <div class="card-body rounded-box bg-gray-800 shadow-lg">
+  <div class="flex flex-row flex-wrap justify-center items-start mx-5">
+    <div class="flex flex-col basis-full md:basis-1/2 justify-start md:justify-center text-center md:text-start">
+      <h1 class="text-3xl">{{member.knownAs}}</h1>
+      <div class="flex flex-wrap justify-center md:justify-start items-start gap-2 sm:gap-5 pt-2">
+        <h1><i class="fa-solid fa-at"></i>{{member.userName}}</h1>
+        <h1><i class="fa-regular fa-clock"></i> Last active {{member.lastActive.toString().split('T')[0]}}</h1>
+      </div>
+      <div class="flex flex-row flex-wrap justify-center self-center md:self-start pt-8">
+        <div class="flex basis-full md:basis-1/2 justify-center md:justify-start">
+          <img class="w-64 border-2 border-primary rounded-lg" src="{{member.photoUrl || './assets/user.png'}}"/>
+        </div>
+        <div class="flex basis-full md:basis-1/2 justify-center md:justify-start pt-4 md:pt-0 pl-0 md:pl-4">
+          <a class="btn mx-1 hover:bg-primary text-white hover:border-none border-none"><i class="fa fa-heart text-md"></i></a>
+          <a class="btn mx-1 hover:bg-primary text-white hover:border-none border-none"><i class="fa fa-envelope text-md"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col basis-full md:basis-1/2 justify-start md:justify-end text-center md:text-start">
+      <h1 class="text-3xl pt-8 pb-4 md:pb-14 md:pt-0">About me</h1>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Name</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.knownAs}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">I am a</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.gender}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Age</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.age}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">City</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.city}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Country</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.country}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Member since</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.created.toString().split('T')[0]}}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-row flex-wrap justify-center items-start gap-5 mx-5 my-2">
+    <div tabindex="0" class="collapse collapse-open border border-base-300 bg-base-100 rounded-box basis-full">
+      <div class="collapse-title text-xl font-medium">
+        Introduction
+      </div>
+      <div class="collapse-content">
+        <p class="whitespace-normal break-words">{{member.introduction}}</p>
+      </div>
+    </div>
+    <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box basis-full">
+      <div class="collapse-title text-xl font-medium">
+        Interests
+      </div>
+      <div class="collapse-content">
+        <p class="whitespace-normal break-words">{{member.interests}}</p>
+      </div>
+    </div>
+    <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box basis-full">
+      <div class="collapse-title text-xl font-medium">
+        Looking for a
+      </div>
+      <div class="collapse-content">
+        <p class="whitespace-normal break-words">{{member.lookingFor}}</p>
+      </div>
+    </div>
+    </div>
+    <div class="card-actions flex justify-center basis-full">
+      <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery inline-block mb-20"></ngx-gallery>
+    </div>
+  </div>
+</div>
