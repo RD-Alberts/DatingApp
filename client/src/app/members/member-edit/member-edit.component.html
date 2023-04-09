@@ -1,4 +1,4 @@
-<form *ngIf="member" class="flex flex-col flex-wrap" #editForm="ngForm" >
+<form *ngIf="member" class="flex flex-col flex-wrap" #editForm="ngForm" (ngSubmit)="updateMember()">
   <h1 class="text-3xl mb-8">Your profile</h1>
   <div class="alert alert-info shadow-lg mb-8" *ngIf="editForm.dirty">
     <div>

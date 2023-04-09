@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { User } from 'src/app/_models/user';
@@ -11,10 +13,20 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
+  //ViewChild is used to keep track if you want to go to another page while there are unsaved changes
+@ViewChild('editForm') editForm: NgForm | undefined;
+//Hostlistener is used to keep track if you want to go to anoter website while there are unsaved changes
+//The words used below are 'reserved words'
+@HostListener('window:beforeunload', ['$event']) unloadNotification($event:any) {
+  if(this.editForm?.dirty) {
+    $event.returnValue = true;
+  }
+}
+
   member: Member | undefined;
   user: User | null = null;
 
-  constructor(private accountService: AccountService, private memberService: MembersService) { 
+  constructor(private accountService: AccountService, private memberService: MembersService, private toastr: ToastrService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => this.user = user
     })
@@ -31,5 +43,12 @@ export class MemberEditComponent implements OnInit {
       next: member => this.member =  member
     })
   }
+
+  updateMember() {
+    console.log(this.member);
+    this.toastr.success('Profile updated succesfully');
+    this.editForm?.reset(this.member);
+  }
+
 
 }
