@@ -1,0 +1,93 @@
+<form *ngIf="member" class="flex flex-col flex-wrap" #editForm="ngForm" >
+  <h1 class="text-3xl mb-8">Your profile</h1>
+  <div class="alert alert-info shadow-lg mb-8" *ngIf="editForm.dirty">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <span><strong>Information:</strong> You have made changes. Any unsaved changes will be lost.</span>
+    </div>
+  </div>
+  <div class="card-body rounded-box bg-gray-800 shadow-lg">
+  <div class="flex flex-row flex-wrap justify-center items-start">
+    <div class="flex flex-col basis-full md:basis-1/2 justify-start md:justify-center text-center md:text-start">
+      <h1 class="text-3xl">{{member.knownAs}}</h1>
+      <div class="flex flex-wrap justify-center md:justify-start items-start gap-2 sm:gap-5 pt-2">
+        <h1><i class="fa-solid fa-at"></i>{{member.userName}}</h1>
+        <h1><i class="fa-regular fa-clock"></i> Last active {{member.lastActive.toString().split('T')[0]}}</h1>
+      </div>
+      <div class="flex flex-row flex-wrap justify-center self-center md:self-start pt-8">
+        <div class="flex basis-full md:basis-1/2 justify-center md:justify-start">
+          <img class="w-64 border-2 border-primary rounded-lg" src="{{member.photoUrl || './assets/user.png'}}"/>
+        </div>
+        <div class="flex basis-full md:basis-1/2 justify-center md:justify-start pt-4 md:pt-0 pl-0 md:pl-4">
+          <button [disabled]="!editForm.dirty" type="submit" class="btn mx-1 hover:bg-primary text-white hover:border-none border-none">Save Changes</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col basis-full md:basis-1/2 justify-start md:justify-end text-center md:text-start">
+      <h1 class="text-3xl pt-8 pb-4 md:pb-14 md:pt-0">About me</h1>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Name</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.knownAs}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">I am a</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.gender}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end  bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Age</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start  bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.age}}</h1>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end  bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">City</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <input name="city" [(ngModel)]="member.city" type="text" placeholder="{{member.city}}" class="input input-bordered input-primary w-full max-w-xs pl-2" />
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Country</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <input name="country" [(ngModel)]="member.country" type="text" placeholder="{{member.country}}" class="input input-bordered input-primary w-full max-w-xs pl-2" />
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap md:gap-4 px-8 md:px-0 pb-2">
+        <div class="flex basis-1/2 md:basis-1/4 justify-end bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pr-2">Member since</h1>
+        </div>
+        <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
+          <h1 class="pl-2">{{member.created.toString().split('T')[0]}}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-row flex-wrap justify-center items-start gap-5 mx-5">
+    <div class="flex flex-col w-full basis-full py-4 px-4 md:px-0">
+      <div class="grid h-14 card bg-base-300 rounded-box place-items-center mb-4">Introduction</div>
+      <textarea class="textarea textarea-primary w-full h-32" placeholder="{{member.introduction}}" name="introduction" [(ngModel)]="member.introduction"></textarea>
+    </div>
+    <div class="flex flex-col w-full basis-full py-4 px-4 md:px-0">
+      <div class="grid h-14 card bg-base-300 rounded-box place-items-center mb-4">Interests</div>
+      <textarea class="textarea textarea-primary w-full h-32" placeholder="{{member.interests}}" name="interests" [(ngModel)]="member.interests"></textarea>
+    </div>
+    <div class="flex flex-col w-full basis-full py-4 px-4 md:px-0">
+      <div class="grid h-14 card bg-base-300 rounded-box place-items-center mb-4">Looking for</div>
+      <textarea class="textarea textarea-primary w-full h-32" placeholder="{{member.lookingFor}}" name="lookingFor" [(ngModel)]="member.lookingFor"></textarea>
+    </div>
+  </div>
+  </div>
+</form>
