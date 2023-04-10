@@ -22,6 +22,9 @@ app.UseMiddleware<ExceptionMiddleware>();
 //always needs to do this because client and api run on different localhost (use client localhost)
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200"));
 
+//used this one as a test
+//app.UseCors(builder => builder.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200").WithMethods("PUT", "POST", "GET"));
+
 //has to be after cors and before mapcontrollers
 app.UseAuthentication();
 app.UseAuthorization();
