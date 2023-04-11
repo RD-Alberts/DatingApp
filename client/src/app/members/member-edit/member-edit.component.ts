@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { setupTestingRouter } from '@angular/router/testing';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
@@ -50,10 +49,7 @@ export class MemberEditComponent implements OnInit {
       next: _ => {
         this.toastr.success('Profile updated succesfully');
         this.editForm?.reset(this.member);
-
       }
     })
   }
-
-
 }
