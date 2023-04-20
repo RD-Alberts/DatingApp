@@ -88,6 +88,7 @@
       <div class="grid h-14 card bg-base-300 rounded-box place-items-center mb-4">Looking for</div>
       <textarea class="textarea textarea-primary w-full h-32" placeholder="{{member.lookingFor}}" name="lookingFor" [(ngModel)]="member.lookingFor"></textarea>
     </div>
+    <app-photo-editor [member]="member" class="flex flex-row flex-wrap basis-full md:justify-start justify-center"></app-photo-editor>
   </div>
   </div>
 </form>
