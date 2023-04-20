@@ -27,6 +27,7 @@
               "node_modules/daisyui/dist/styled.css",
               "node_modules/tailwindcss/tailwind.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-spinner/animations/ball-spin.css",
               "src/styles.css"
             ],
             "scripts": []
