@@ -27,10 +27,10 @@
       <div class="sm:flex hidden" *ngIf="(accountService.currentUser$ | async) as user">
         <h1>Welcome {{user.username | titlecase}}</h1>
       </div>
-      <div class="dropdown dropdown-end" *ngIf="accountService.currentUser$ | async">
+      <div class="dropdown dropdown-end" *ngIf="(accountService.currentUser$ | async) as user">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-12 rounded-full">
-            <img src="https://avatars.githubusercontent.com/u/113441481?s=400&u=b3922e0644fc97afdea0f44a2f6ee24a3967cb4e&v=4" />
+            <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}"/>
           </div>
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
