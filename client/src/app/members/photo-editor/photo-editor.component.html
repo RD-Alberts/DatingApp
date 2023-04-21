@@ -7,7 +7,7 @@
     </div>
     <div class="flex flex-row flex-wrap justify-center mt-4 gap-2">
       <button [disabled]="photo.isMain" (click)="setMainPhoto(photo)" [ngClass]='photo.isMain ? "btn btn-primary" : "btn btn-outline btn-primary"'>Main</button>
-      <button  class="btn btn-outline btn-primary"><i class="fa fa-trash"></i></button>
+      <button [disabled]="photo.isMain" (click)="deletePhoto(photo.id)" class="btn btn-outline btn-primary"><i class="fa fa-trash"></i></button>
     </div>
   </div>
 </div>
