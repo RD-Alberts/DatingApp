@@ -17,7 +17,7 @@
   <div class="justify-self-start flex flex-col flex-wrap m-4 gap-3">
     <h1 class="text-3xl error">Add photos</h1>
 
-    <div ng2FileDrop [ngClass]="{'border-2': hasbaseDropZoneOver, 'border-primary': hasbaseDropZoneOver, 'border-transparent': !hasbaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+    <div ng2FileDrop [ngClass]="{'border-2': hasBaseDropzoneOver, 'border-primary': hasBaseDropzoneOver, 'border-transparent': !hasBaseDropzoneOver}" (fileOver)="fileOverBase($event)"
       [uploader]="uploader" class="bg-slate-700 p-4 rounded-md text-center border-2 transition ease-in-out duration-200">
       <i class="fa fa-upload fa-2x"></i>
       <h1 class="text-2xl error">Drop photos here</h1>
@@ -48,10 +48,10 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr *ngFor="let item of uploader.queue">
+          <tr *ngFor="let item of uploader?.queue">
             <td><strong>{{ item?.file?.name }}</strong></td>
-            <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-          </tr> -->
+            <td *ngIf="uploader?.options?.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -59,17 +59,20 @@
     <div>
       <div>
         <h1 class="text-xl error">Queue progress:</h1>
-        <!-- <progress class="progress progress-primary" value="{{uploader.progress}}" max="100" role="progressbar"></progress> -->
+        <progress class="progress progress-primary" value="{{uploader?.progress}}" max="100" role="progressbar"></progress>
       </div>
-      <button type="button" class="btn btn-success mr-2" >
-        <span class="fa fa-upload mr-2"></span> Upload all
-      </button>
-      <button type="button" class="btn btn-warning mr-2" >
-        <span class="fa fa-ban mr-2"></span> Cancel all
-      </button>
-      <button type="button" class="btn btn-error mr-2" >
-        <span class="fa fa-trash mr-2"></span> Remove all
-      </button>
+      <button type="button" class="btn btn-success mr-2" (click)="uploader?.uploadAll()"
+      [disabled]="!uploader?.getNotUploadedItems()?.length">
+      <span class="fa fa-upload mr-2"></span> Upload all
+    </button>
+    <button type="button" class="btn btn-warning mr-2" (click)="uploader?.cancelAll()"
+      [disabled]="!uploader?.isUploading">
+      <span class="fa fa-ban mr-2"></span> Cancel all
+    </button>
+    <button type="button" class="btn btn-error mr-2" (click)="uploader?.clearQueue()"
+      [disabled]="!uploader?.queue?.length">
+      <span class="fa fa-trash mr-2"></span> Remove all
+    </button>
     </div>
   </div>
 </div>

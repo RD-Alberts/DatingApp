@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 export class PhotoEditorComponent implements OnInit {
   @Input() member: Member | undefined;
   uploader: FileUploader | undefined;
-  hasbaseDropZoneOver = false;
+  hasBaseDropzoneOver = false;
   baseUrl = environment.apiUrl;
   user: User | undefined;
 
@@ -30,8 +30,8 @@ export class PhotoEditorComponent implements OnInit {
     this.initializeUploader();
   }
 
-  fileOverBase(e: any) {
-    this.hasbaseDropZoneOver = e;
+  fileOverBase(e: any){
+    this.hasBaseDropzoneOver = e;
   }
 
   setMainPhoto(photo: Photo) {
@@ -79,6 +79,11 @@ export class PhotoEditorComponent implements OnInit {
       if(response) {
         const photo = JSON.parse(response);
         this.member?.photos.push(photo);
+        if(photo.isMain && this.user && this.member) {
+          this.user.photoUrl = photo.url;
+          this.member.photoUrl = photo.url;
+          this.accountService.setCurrentUser(this.user);
+        }
       }
     }
 
