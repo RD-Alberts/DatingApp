@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,13 +14,16 @@ export class RegisterComponent implements OnInit {
   //input property is for parent to child
   //output property is for child to parent
  @Output() cancelRegister = new EventEmitter();
-  model: any = {}
   registerForm: FormGroup = new FormGroup({});
+  errorText: string | undefined;
+  errorState: boolean | undefined;
+  counter: number =0;
 
-  constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder) { }
+  constructor(private accountService: AccountService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.counter = 1500;
   }
 
   initializeForm() {
@@ -44,20 +48,26 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register() {
-    this.accountService.register(this.model).subscribe({
-      next: () => {
-        this.cancel();
+  register(){
+    this.accountService.register(this.registerForm.value).subscribe({
+      next: response =>{
+        this.router.navigateByUrl('/members');
       },
-      error: error =>  {
-        this.toastr.error(error.error),
-        console.log(error)
+      error: error => {
+        let interval = setInterval(() => {
+          this.counter = this.counter - 1;
+          this.errorState = true;
+          this.errorText = error.error;
+          console.log(this.counter)
+          if(this.counter == 0){
+            this.errorState = false;
+            this.errorText = "";
+            clearInterval(interval);
+            this.counter = 1500;
+          };
+        });
       }
-    })
-  }
-
-  cancel() {
-   this.cancelRegister.emit(false);
+    });
   }
 
 }
