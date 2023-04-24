@@ -27,7 +27,7 @@ export class MembersService {
 
   //Get a single memeber
   getMember(username:string) {
-    const member = this.members.find(x => x.userName === username);
+    const member = this.members.find(x => x.username === username);
     if(member ) return of(member);
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
