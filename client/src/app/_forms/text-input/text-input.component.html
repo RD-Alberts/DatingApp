@@ -1,0 +1,23 @@
+<div class="form-control !my-0">
+    <label class="label">
+      <span class="label-text text-sm font-medium text-white dark:text-gray-300">{{label}}</span>
+    </label>
+    <label class="input-group">
+      <input type={{type}} placeholder='{{label}}' [formControl]="control"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm !rounded-l-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+      required>
+      <span class="bg-white" *ngIf="ngControl.touched && ngControl.invalid"><i class="fa-solid fa-circle-exclamation text-red-600"></i></span>
+    </label>
+    <label class="label" *ngIf="control.errors?.['required'] && ngControl.touched">
+      <span class="label-text text-sm font-medium text-red-600 error">Please enter a {{label}}</span>
+    </label>
+    <label class="label" *ngIf="control.errors?.['minlength'] && ngControl.touched">
+      <span class="label-text text-sm font-medium text-red-600 error">{{label}} must be at least {{control.errors?.['minlength'].requiredLength}} characters</span>
+    </label>
+    <label class="label" *ngIf="control?.errors?.['maxlength'] && ngControl.touched">
+      <span class="label-text text-sm font-medium text-red-600 error">{{label}} must be at most {{control.errors?.['maxlength'].requiredLength}} characters</span>
+    </label>
+    <label class="label" *ngIf="control.errors?.['isMatching'] && ngControl.touched">
+      <span class="label-text text-sm font-medium text-red-600 error">Confirmation password doesn't match</span>
+    </label>
+  </div>

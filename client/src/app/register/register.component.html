@@ -2,36 +2,48 @@
     <div class="hero-content flex-col ">
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div class="card-body">
+                <!-- <div *ngIf="errorState" class="toast-top basis-full py-3">
+                    <div class="alert alert-warning bg-red-600 text-white">
+                      <div>
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span class="error">{{errorText}}</span>
+                      </div>
+                    </div>
+                  </div> -->
                 <div class="text-center">
                     <h1 class="text-5xl font-bold">Sign up</h1>
                 </div>
-                <form class="flex justify-center flex-col space-y-4" #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
-
-                    <div class="form-group">
-                        <label class="label">
-                            <span class="label-text">Name</span>
+                <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" class="space-y-6">
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-2">
+                          <span class="label-text">I am a:</span>
+                          <input type="radio" value="male" class="radio radio-primary" formControlName='gender' />
+                          <span class="label-text">Male</span>
+                          <input type="radio" value="female" class="radio radio-primary" formControlName='gender' />
+                          <span class="label-text">Female</span>
                         </label>
-                        <input type="text" 
-                        class="input input-bordered"
-                        name="username" 
-                        [(ngModel)]="model.username"
-                        placeholder="Username">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="label">
-                            <span class="label-text">Password</span>
-                        </label>
-                        <input type="password" 
-                        class="input input-bordered" 
-                        name="password" 
-                        [(ngModel)]="model.password"
-                        placeholder="Password">
-                    </div>
+                      </div>
+                      <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Username'"></app-text-input>
+                      <app-text-input [formControl]="$any(registerForm.controls['knownAs'])" [label]="'Known As'"></app-text-input>
+                      <app-text-input [formControl]="$any(registerForm.controls['dateOfBirth'])" [label]="'Date Of Birth'" [type]="'date'"></app-text-input>
+                      <app-text-input [formControl]="$any(registerForm.controls['city'])" [label]="'City'"></app-text-input>
+                      <app-text-input [formControl]="$any(registerForm.controls['country'])" [label]="'Country'"></app-text-input>
+                      <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Your Password'"[type]="'password'"></app-text-input>
+                      <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confirm Password'"[type]="'password'"></app-text-input>
                     
                     <div class="text-center space-x-2">
-                    <button class="btn btn-success me-2" type="submit">Register</button>
-                    <button class="btn btn-default " type="button" (click)="cancel()">Cancel</button>
+                        <button type="submit" [disabled]="!registerForm.valid"
+                        class="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                        <span
+                          class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0 text-white">
+                          Register
+                        </span>
+                      </button>
+                      <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                        Already have a account? <label href="#"
+                          class="text-pink-700 hover:underline dark:text-pink-500 hover:cursor-pointer" for="loginModel"
+                        >Login</label>
+                      </div>
                 </div>
             </form>
             </div>
