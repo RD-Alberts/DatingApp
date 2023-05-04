@@ -12,7 +12,7 @@
       <h1 class="text-3xl">{{member.knownAs}}</h1>
       <div class="flex flex-wrap justify-center md:justify-start items-start gap-2 sm:gap-5 pt-2">
         <h1><i class="fa-solid fa-at"></i>{{member.username}}</h1>
-        <h1><i class="fa-regular fa-clock"></i> Last active {{member.lastActive.toString().split('T')[0]}}</h1>
+        <h1><i class="fa-regular fa-clock"></i> Last active: {{member.lastActive | timeago}}</h1>
       </div>
       <div class="flex flex-row flex-wrap justify-center self-center md:self-start pt-8">
         <div class="flex basis-full md:basis-1/2 justify-center md:justify-start">
@@ -70,7 +70,7 @@
           <h1 class="pr-2">Member since</h1>
         </div>
         <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
-          <h1 class="pl-2">{{member.created.toString().split('T')[0]}}</h1>
+          <h1 class="pl-2">{{member.created | date: 'dd MMMM yyyy'}}</h1>
         </div>
       </div>
     </div>

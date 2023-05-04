@@ -25,7 +25,7 @@
         </form>
          <!-- Only visible if you are logged in -->
       <div class="sm:flex hidden" *ngIf="(accountService.currentUser$ | async) as user">
-        <h1>Welcome {{user.username | titlecase}}</h1>
+        <h1>Welcome {{user.knowAs | titlecase}}</h1>
       </div>
       <div class="dropdown dropdown-end" *ngIf="(accountService.currentUser$ | async) as user">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">

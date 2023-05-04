@@ -1,6 +1,61 @@
 
+<div class="flex flex-row flex-wrap justify-center items-center" *ngIf="pagination">
+  <h1 class="error text-5xl text-white">Your matches - {{pagination.totalItems}}</h1>
+</div>
+
+<div class="flex flex-row flex-wrap justify-center items-center my-12" *ngIf="userParams">
+  <form class="flex flex-row flex-wrap justify-center items-center" #form="ngForm" (ngSubmit)="loadMembers()"
+    autocomplete="off">
+    <div class="form-control basis-auto m-4">
+      <label class="input-group input-group-vertical">
+        <span class="py-3">Age from:</span>
+        <input type="number" placeholder="18" class="input input-bordered" name="minAge" [(ngModel)]="userParams.minAge"/>
+      </label>
+    </div>
+    <div class="form-control basis-auto m-4">
+      <label class="input-group input-group-vertical">
+        <span class="py-3">Age to:</span>
+        <input type="number" placeholder="99" class="input input-bordered" name="maxAge" [(ngModel)]="userParams.maxAge"/>
+      </label>
+    </div>
+    <div class="form-control basis-auto m-4">
+      <label class="input-group input-group-vertical">
+        <span class="py-3">Gender</span>
+        <select name="gender" class="select select-bordered w-full max-w-xs" [(ngModel)]="userParams.gender">
+          <option *ngFor="let gender of genderList" [value]="gender.value">
+            {{gender.display}}
+          </option>
+        </select>
+      </label>
+    </div>
+    <div class="basis-auto flex flex-row flex-wrap justify-center items-center gap-3 mt-8">
+      <button type="submit" class="btn btn-active btn-primary text-white hover:scale-110">Apply Filters</button>
+      <button (click)="resetFilters()" class="btn btn-outline btn-secondary hover:!text-white">Reset Filters</button>
+      <div class="form-control">
+        <div class="input-group">
+          <select name="orderBy" [(ngModel)]="userParams.orderBy" class="select select-bordered">
+            <option value="lastActive">Last Active</option>
+            <option value="created">Newest Members</option>
+          </select>
+          <button class="btn btn-outline btn-accent hover:!text-white" (click)="loadMembers()">Filter</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
 <div class="flex flex-row flex-wrap justify-center lg:justify-start items-start">
-    <div *ngFor="let member of members$ | async" class="flex basis-1/4 p-5">
+    <div *ngFor="let member of members" class="flex basis-1/4 p-5">
       <app-member-card [member]="member"></app-member-card>
+    </div>
+  </div>
+
+  <div class="flex flex-row flex-wrap justify-center items-start mt-12" *ngIf="pagination">
+    <div class="btn-group" *ngIf="userParams">
+      <button class="btn" (click)="prevPage()"
+        [disabled]="userParams.pageNumber < pagination.totalPages - 1 || (userParams.pageNumber) - 1 === 0">«</button>
+      <button class="btn">Page {{userParams.pageNumber}}</button>
+      <button class="btn" (click)="nextPage()" [disabled]="userParams.pageNumber >= pagination.totalPages">»</button>
     </div>
   </div>

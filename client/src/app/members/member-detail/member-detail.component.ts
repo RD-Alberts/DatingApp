@@ -13,6 +13,9 @@ export class MemberDetailComponent implements OnInit {
   member: Member | undefined;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
+  tab1: boolean | undefined;
+  tab2: boolean | undefined;
+  tab3: boolean | undefined;
 
   constructor(private memberService: MembersService, private route: ActivatedRoute) { }
 
@@ -55,5 +58,26 @@ export class MemberDetailComponent implements OnInit {
       }
     });
   }
-
+  showTab(tab: string) {
+    switch (tab) {
+      case 'tab1':
+        this.tab1 = true;
+        this.tab2 = false;
+        this.tab3 = false;
+        break;
+      case 'tab2':
+        this.tab2 = true;
+        this.tab1 = false;
+        this.tab3 = false;
+        break;
+      case 'tab3':
+        this.tab3 = true;
+        this.tab1 = false;
+        this.tab2 = false;
+        break;
+      default:
+        break;
+    }
+  }
 }
+

@@ -5,7 +5,7 @@
       <h1 class="text-3xl">{{member.knownAs}}</h1>
       <div class="flex flex-wrap justify-center md:justify-start items-start gap-2 sm:gap-5 pt-2">
         <h1><i class="fa-solid fa-at"></i>{{member.username}}</h1>
-        <h1><i class="fa-regular fa-clock"></i> Last active {{member.lastActive.toString().split('T')[0]}}</h1>
+        <h1><i class="fa-regular fa-clock"></i> Last active: {{member.lastActive | timeago}}</h1>
       </div>
       <div class="flex flex-row flex-wrap justify-center self-center md:self-start pt-8">
         <div class="flex basis-full md:basis-1/2 justify-center md:justify-start">
@@ -64,38 +64,27 @@
           <h1 class="pr-2">Member since</h1>
         </div>
         <div class="flex basis-1/2 justify-start bg-base-100 items-center rounded-md border-2 border-base-100 border-r-4 md:border-0">
-          <h1 class="pl-2">{{member.created.toString().split('T')[0]}}</h1>
+          <h1 class="pl-2">{{member.created | date: 'dd MMM yyyy'}}</h1>
         </div>
       </div>
     </div>
   </div>
   <div class="flex flex-row flex-wrap justify-center items-start gap-5 mx-5 my-2">
-    <div tabindex="0" class="collapse collapse-open border border-base-300 bg-base-100 rounded-box basis-full">
-      <div class="collapse-title text-xl font-medium">
-        Introduction
-      </div>
-      <div class="collapse-content">
-        <p class="whitespace-normal break-words">{{member.introduction}}</p>
-      </div>
+    <div class="tabs tabs-boxed basis-full">
+      <a class="tab" (click)="showTab('tab1')" [ngClass]="{'tab-active': tab1}">Introduction</a>
+      <a class="tab" (click)="showTab('tab2')" [ngClass]="{'tab-active': tab2}">Interests</a>
+      <a class="tab" (click)="showTab('tab3')" [ngClass]="{'tab-active': tab3}">Looking for</a>
     </div>
-    <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box basis-full">
-      <div class="collapse-title text-xl font-medium">
-        Interests
-      </div>
-      <div class="collapse-content">
-        <p class="whitespace-normal break-words">{{member.interests}}</p>
-      </div>
+    <div class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab1, 'hidden': !tab1}">
+      <h1 class="break-words whitespace-normal error">{{member.introduction}}</h1>
     </div>
-    <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box basis-full">
-      <div class="collapse-title text-xl font-medium">
-        Looking for a
-      </div>
-      <div class="collapse-content">
-        <p class="whitespace-normal break-words">{{member.lookingFor}}</p>
-      </div>
+    <div class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab2, 'hidden': !tab2}">
+      <h1 class="break-words whitespace-normal error">{{member.interests}}</h1>
     </div>
+    <div class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab3, 'hidden': !tab3}">
+      <h1 class="break-words whitespace-normal error">{{member.lookingFor}}</h1>
     </div>
-    <div class="card-actions flex justify-center basis-full">
+    <div class="flex justify-center basis-full">
       <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery inline-block mb-20"></ngx-gallery>
     </div>
   </div>
