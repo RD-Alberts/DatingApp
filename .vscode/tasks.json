@@ -27,7 +27,7 @@
         },
         {
             "label": "watch",
-            "command": "dotnet",
+            "command": "dotnet", 
             "type": "process",
             "args": [
                 "watch",
