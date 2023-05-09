@@ -23,7 +23,7 @@ export class MemberEditComponent implements OnInit {
   }
 }
 
-  member: Member | undefined;
+  member!: Member;
   user: User | null = null;
 
   constructor(private accountService: AccountService, private memberService: MembersService, private toastr: ToastrService) { 

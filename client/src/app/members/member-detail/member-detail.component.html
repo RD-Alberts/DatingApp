@@ -1,4 +1,4 @@
-<div *ngIf="member" class=" cardflex flex-col flex-wrap">
+<div class=" cardflex flex-col flex-wrap">
   <div class="card-body rounded-box bg-gray-800 shadow-lg">
   <div class="flex flex-row flex-wrap justify-center items-start mx-5">
     <div class="flex flex-col basis-full md:basis-1/2 justify-start md:justify-center text-center md:text-start">
@@ -74,6 +74,7 @@
       <a class="tab" (click)="showTab('tab1')" [ngClass]="{'tab-active': tab1}">Introduction</a>
       <a class="tab" (click)="showTab('tab2')" [ngClass]="{'tab-active': tab2}">Interests</a>
       <a class="tab" (click)="showTab('tab3')" [ngClass]="{'tab-active': tab3}">Looking for</a>
+      <a class="tab" (click)="showTab('tab4')" [ngClass]="{'tab-active': tab4}">Messages</a>
     </div>
     <div class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab1, 'hidden': !tab1}">
       <h1 class="break-words whitespace-normal error">{{member.introduction}}</h1>
@@ -83,6 +84,19 @@
     </div>
     <div class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab3, 'hidden': !tab3}">
       <h1 class="break-words whitespace-normal error">{{member.lookingFor}}</h1>
+    </div>
+    <div id="chat" class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab4, 'hidden': !tab4}">
+      <app-member-messages *ngIf="tab4 && messages.length > 0" [username]="member.username" [messages]="messages"></app-member-messages>
+      <div class="flex flex-col flex-wrap w-full overflow-auto h-1/4 my-4">
+        <form #messageForm="ngForm"  autocomplete="off" class="form-control basis-full">
+          <div class="input-group w-full">
+            <input type="text" placeholder="Message..." name="messageContent" class="input input-bordered w-full" required [(ngModel)]="messageContent"/>
+            <button [disabled]="!messageForm.valid" class="btn btn-square" type="submit">
+              <i class="fa-regular fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="flex justify-center basis-full">
       <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery inline-block mb-20"></ngx-gallery>

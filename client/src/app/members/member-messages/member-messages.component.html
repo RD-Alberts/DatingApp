@@ -1,0 +1,36 @@
+<!-- <p *ngFor="let message of messages">{{message?.content}}</p> -->
+
+<div class="flex flex-col flex-wrap w-full border-2 rounded-md border-slate-600 overflow-auto h-1/4">
+    <div class="flex flex-col flex-wrap basis-full py-3" *ngFor="let message of messages">
+        <div class="chat chat-start" *ngIf="message.senderUsername === username">
+            <div class="chat-header">
+                {{message.senderUsername}}
+                <time class="text-xs opacity-50">{{message.messageSend | timeago}}</time>
+            </div>
+            <div class="chat-bubble">{{message.content}}</div>
+            <div class="chat-footer opacity-50">
+                <div class="flex ml-1" *ngIf="!message.dateRead && message.senderUsername !== username">
+                    (unread)
+                </div>
+                <div class="flex ml-1" *ngIf="message.dateRead && message.senderUsername !== username">
+                    (read {{message.dateRead | timeago}})
+                </div>
+            </div>
+        </div>
+        <div class="chat chat-end" *ngIf="message.senderUsername !== username">
+            <div class="chat-header">
+                {{message.senderUsername}}
+                <time class="text-xs opacity-50">{{message.messageSend | timeago}}</time>
+            </div>
+            <div class="chat-bubble">{{message.content}}</div>
+            <div class="chat-footer opacity-50">
+                <div class="flex ml-1" *ngIf="!message.dateRead && message.senderUsername !== username">
+                    (unread)
+                </div>
+                <div class="flex ml-1" *ngIf="message.dateRead && message.senderUsername !== username">
+                    (read {{message.dateRead | timeago}})
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

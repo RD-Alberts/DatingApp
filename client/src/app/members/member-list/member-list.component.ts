@@ -14,16 +14,17 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemberListComponent implements OnInit {
   //members$: Observable<Member[]> | undefined;
-  members: Member[] = [];
-  pagination: Pagination | undefined;
-  userParams: UserParams | undefined;
+  members!: Member[];
+  pagination!: Pagination;
+  userParams: UserParams;
+  user!: User;
   genderList = [
     { value: 'male', display: 'Males' },
-    { value: 'female', display: 'Females' }
-  ]
+    { value: 'female', display: 'Females' },
+  ];
 
   constructor(private memberService: MembersService) {
-    this.userParams = this.memberService.getUserParams();
+    this.userParams = memberService.getUserParams();
   }
 
   ngOnInit(): void {
@@ -31,31 +32,21 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
-    if (this.userParams) {
-      this.memberService.setUserParams(this.userParams);
-
-      this.memberService.getMemebers(this.userParams).subscribe({
-        next: response => {
-          if (response.result && response.pagination) {
-            this.members = response.result;
-            this.pagination = response.pagination;
-          }
-        }
-      })
-    }
+    this.memberService.setUserParams(this.userParams);
+    this.memberService.getMembers(this.userParams).subscribe({
+      next: (response) => {
+        this.members = response.result;
+        this.pagination = response.pagination;
+      },
+    });
   }
 
   resetFilters() {
-
     this.userParams = this.memberService.resetUserParams();
     this.loadMembers();
-
   }
 
   nextPage() {
-    if (!this.pagination) return;
-    if (!this.userParams) return;
-
     if (this.userParams.pageNumber < this.pagination.totalPages) {
       ++this.userParams.pageNumber;
       this.memberService.setUserParams(this.userParams);
@@ -64,9 +55,6 @@ export class MemberListComponent implements OnInit {
   }
 
   prevPage() {
-    if (!this.pagination) return;
-    if (!this.userParams) return;
-
     if (this.userParams.pageNumber >= this.pagination.totalPages - 1) {
       --this.userParams.pageNumber;
       this.memberService.setUserParams(this.userParams);
