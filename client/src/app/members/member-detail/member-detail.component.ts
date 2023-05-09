@@ -14,7 +14,7 @@ import { MessageService } from 'src/app/_services/message.service';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  // @ViewChild('messageForm') messageForm: NgForm;
+  @ViewChild('messageForm') messageForm!: NgForm;
   member!: Member;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
@@ -33,7 +33,9 @@ export class MemberDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadMemeber();
+    this.route.data.subscribe({
+      next: data => this.member = data['member']
+    })
 
     this.galleryOptions = [
       {
@@ -50,6 +52,7 @@ export class MemberDetailComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = false;
     this.tab4 = false;
+
     this.route.queryParams.subscribe({
       next: params => {
         params['tab'] ? this.showTab('tab' + params['tab']) : this.showTab('tab1')
@@ -71,17 +74,6 @@ export class MemberDetailComponent implements OnInit {
     return imageUrls;
   }
 
-  loadMemeber() {
-    const username = this.route.snapshot.paramMap.get('username');
-    if(!username) return;
-    this.memberService.getMember(username).subscribe({
-      next: member => {
-        this.member = member;
-        this.galleryImages = this.getImages();
-      }
-    });
-  }
-
   loadMessages(){
     this.messageService.getMessageThread(this.member.username).subscribe({
       next: messages => {
@@ -89,6 +81,15 @@ export class MemberDetailComponent implements OnInit {
         if(messages.length === 0) this.toastr.warning("You haven't started a chat yet", "No contact");
       }
     });
+  }
+
+  sendMessage(){
+    this.messageService.sendMessage(this.member.username, this.messageContent).subscribe({
+      next: message => {
+        this.messages.push(message);
+        this.messageForm.reset();
+      }
+    })
   }
 
   showTab(tab: string) {

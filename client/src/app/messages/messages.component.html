@@ -24,7 +24,7 @@
         </thead>
         <tbody>
           <!-- row 1 -->
-          <tr *ngFor="let message of messages" class="hover:cursor-pointer" routerLink="{{container === 'Outbox' ? '/members/' + message.recipientUsername : '/members/' + message.senderUsername}}" [queryParams]="{tab: 4}">
+          <tr [hidden]="loading" *ngFor="let message of messages" class="hover:cursor-pointer" routerLink="{{container === 'Outbox' ? '/members/' + message.recipientUsername : '/members/' + message.senderUsername}}" [queryParams]="{tab: 4}">
             <td>{{message.content}}</td>
             <td>
               <div class="flex items-center space-x-3" *ngIf="container === 'Outbox'">
@@ -50,7 +50,7 @@
             </td>
             <td>{{message.messageSend| timeago}}</td>
             <th>
-              <button (click)="$event.stopPropagation()" (click)="(message.id)" class="btn btn-error btn-outline btn-md">Delete</button>
+              <button (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-error btn-outline btn-md">Delete</button>
             </th>
           </tr>
         </tbody>
@@ -58,7 +58,7 @@
     </div>
   </div>
   
-  <div class="flex flex-row flex-wrap justify-center items-start mt-12" *ngIf="pagination">
+  <div class="flex flex-row flex-wrap justify-center items-start mt-12" *ngIf="pagination && !loading">
     <div class="btn-group">
       <button class="btn" (click)="prevPage()"
         [disabled]="pageNumber < pagination.totalPages - 1 || (pageNumber) - 1 === 0">«</button>
