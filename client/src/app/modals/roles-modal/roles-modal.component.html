@@ -1,0 +1,13 @@
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="{{modalFor}}" class="modal-toggle" #inputModal/>
+<label for="{{modalFor}}" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <form class="flex flex-row flex-wrap justify-self-center" #rolesForm="ngForm" id="rolesForm">
+      <div class="flex flex-row flex-wrap basis-1/3" *ngFor="let role of roles">
+        <input [id]="role.name" type="checkbox" [checked]="role.checked" [value]="role.name" (change)="role.checked = !role.checked" [disabled]="role.name === 'Admin' && user.username=== 'development'" class="checkbox checkbox-primary" />
+        <label class="mx-2" [for]="role.name">{{role.name | titlecase}}</label>
+      </div>
+    </form>
+    <button class="btn btn-primary btn-outline my-3 w-full" (click)="updateRoles()" (click)="inputModal.click()">Submit</button>
+  </label>
+</label>

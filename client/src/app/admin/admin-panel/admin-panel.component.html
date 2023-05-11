@@ -1,0 +1,15 @@
+<div class="flex flex-col flex-wrap justify-start gap-y-4">
+  <h1 class="text-4xl text-white error basis-full">Admin Panel</h1>
+  <div class="flex flex-row flex-wrap gap-5 basis-full">
+    <div class="tabs tabs-boxed basis-full">
+      <a class="tab" (click)="showTab('tab1')" [ngClass]="{'tab-active': tab1}" *appHasRole="['Admin']">User management</a>
+      <a class="tab" (click)="showTab('tab2')" [ngClass]="{'tab-active': tab2}" *appHasRole="['Admin', 'Moderator']">Photo management</a>
+    </div>
+  </div>
+  <div class="flex-col basis-full mx-4 my-8" [ngClass]="{'flex': tab1, 'hidden': !tab1}" *appHasRole="['Admin']">
+    <app-user-managment></app-user-managment>
+  </div>
+  <div class="flex-col basis-full mx-4 my-8" [ngClass]="{'flex': tab2, 'hidden': !tab2}" *appHasRole="['Admin', 'Moderator']">
+    <app-photo-managment></app-photo-managment>
+  </div>
+</div>
