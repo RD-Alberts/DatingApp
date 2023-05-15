@@ -49,7 +49,7 @@ export class PresenceService {
 
     this.hubConnection.on('NewMessageReceived', ({username, knowAs}) => {
       console.log(username, knowAs);
-      this.toastr.info(knowAs + ' has send you a new message!').onTap.pipe(take(1)).subscribe({
+      this.toastr.info(knowAs + ' has send you a new message! Click me to see it!').onTap.pipe(take(1)).subscribe({
         next: () => {
           this.router.navigateByUrl('/members/' + username + '?tab=4');
         }
