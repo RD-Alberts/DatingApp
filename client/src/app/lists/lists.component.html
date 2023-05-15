@@ -13,7 +13,7 @@
   
     <div class="flex flex-row flex-wrap justify-center lg:justify-start items-start z-40">
       <div *ngFor="let member of members" class="flex basis-1/4 p-5">
-        <app-member-card [member]="member"></app-member-card>
+        <app-member-card [member]?="member"></app-member-card>
       </div>
     </div>
   
