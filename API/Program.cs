@@ -34,6 +34,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 #region Creates the database on startup if there is no database
 using var scope = app.Services.CreateScope();

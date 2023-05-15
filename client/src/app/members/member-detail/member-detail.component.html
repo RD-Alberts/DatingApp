@@ -88,11 +88,11 @@
       <h1 class="break-words whitespace-normal error">{{member.lookingFor}}</h1>
     </div>
     <div id="chat" class="flex-col basis-full mx-4 mb-8" [ngClass]="{'flex': tab4, 'hidden': !tab4}">
-      <app-member-messages *ngIf="tab4 && messages.length > 0" [username]="member.username" [messages]="messages"></app-member-messages>
+      <app-member-messages class="overflow-y-auto h-96" *ngIf="tab4 && messages.length > 0" [username]="member.username" [messages]="messages"></app-member-messages>
       <div class="flex flex-col flex-wrap w-full overflow-auto h-1/4 my-4">
         <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off" class="form-control basis-full">
           <div class="input-group w-full">
-            <input type="text" placeholder="Message..." name="messageContent" class="input input-bordered w-full" required [(ngModel)]="messageContent"/>
+            <input onkeydown="if (event.keyCode == 13) sendMessage()" type="text" placeholder="Message..." name="messageContent" class="input input-bordered w-full" required [(ngModel)]="messageContent"/>
             <button [disabled]="!messageForm.valid" class="btn btn-square" type="submit">
               <i class="fa-regular fa-paper-plane"></i>
             </button>

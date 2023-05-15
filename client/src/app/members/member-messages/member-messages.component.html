@@ -1,36 +1,24 @@
 <!-- <p *ngFor="let message of messages">{{message?.content}}</p> -->
-
-<div class="flex flex-col flex-wrap w-full border-2 rounded-md border-slate-600 overflow-auto h-1/4">
-    <div class="flex flex-col flex-wrap basis-full py-3" *ngFor="let message of messages">
-        <div class="chat chat-start" *ngIf="message.senderUsername === username">
-            <div class="chat-header">
-                {{message.senderUsername}}
-                <time class="text-xs opacity-50">{{message.messageSend | timeago}}</time>
-            </div>
-            <div class="chat-bubble">{{message.content}}</div>
-            <div class="chat-footer opacity-50">
-                <div class="flex ml-1" *ngIf="!message.dateRead && message.senderUsername !== username">
-                    (unread)
-                </div>
-                <div class="flex ml-1" *ngIf="message.dateRead && message.senderUsername !== username">
-                    (read {{message.dateRead | timeago}})
-                </div>
-            </div>
+<div class="flex flex-col flex-wrap w-full border-2 rounded-md border-slate-600">
+    <div class="flex flex-col flex-wrap basis-full py-3" *ngFor="let message of (messageService.messageThread$ | async)">
+      <div class="flex flex-row flex-wrap items-center text-sm" [ngClass]="{'justify-start ml-3' : message.senderUsername == username, 'justify-end mr-3' : message.senderUsername != username}">
+        <div class="avatar mr-2" title="{{message.senderUsername}}">
+          <div class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <img src="{{message.senderPhotoUrl}}" />
+          </div>
         </div>
-        <div class="chat chat-end" *ngIf="message.senderUsername !== username">
-            <div class="chat-header">
-                {{message.senderUsername}}
-                <time class="text-xs opacity-50">{{message.messageSend | timeago}}</time>
-            </div>
-            <div class="chat-bubble">{{message.content}}</div>
-            <div class="chat-footer opacity-50">
-                <div class="flex ml-1" *ngIf="!message.dateRead && message.senderUsername !== username">
-                    (unread)
-                </div>
-                <div class="flex ml-1" *ngIf="message.dateRead && message.senderUsername !== username">
-                    (read {{message.dateRead | timeago}})
-                </div>
-            </div>
+        {{message.messageSend | timeago}}
+        <div class="flex ml-1" *ngIf="!message.dateRead && message.senderUsername !== username">
+          (unread)
         </div>
+        <div class="flex ml-1" *ngIf="message.dateRead && message.senderUsername !== username">
+          (read {{message.dateRead | timeago}})
+        </div>
+      </div>
+      <div class="flex basis-full text-lg" [ngClass]="{'justify-start ml-3' : message.senderUsername == username, 'justify-end mr-3' : message.senderUsername != username}">
+        <div class="flex rounded-md" [ngClass]="{'bg-slate-700' : message.senderUsername == username, 'bg-slate-600' : message.senderUsername != username}">
+          <h1 class="p-2">{{message.content}}</h1>
+        </div>
+      </div>
     </div>
-</div>
+  </div>

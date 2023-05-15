@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { Message } from 'src/app/_models/message';
+import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 import { MessageService } from 'src/app/_services/message.service';
 import { PresenceService } from 'src/app/_services/presence.service';
@@ -14,7 +17,7 @@ import { PresenceService } from 'src/app/_services/presence.service';
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.css']
 })
-export class MemberDetailComponent implements OnInit {
+export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('messageForm') messageForm!: NgForm;
   member!: Member;
   galleryOptions: NgxGalleryOptions[] = [];
@@ -25,14 +28,23 @@ export class MemberDetailComponent implements OnInit {
   tab4!: boolean;
   messages: Message[] = [];
   messageContent!: string;
+  user!: User;
 
   constructor(
-    private memberService: MembersService,
+    public presenceService: PresenceService,
+    private accountService: AccountService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private toastr: ToastrService,
-    public presenceService: PresenceService
-  ) {}
+    private router: Router
+  ) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if(user) this.user = user;
+      },
+    });
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit(): void {
     this.route.data.subscribe({
@@ -85,45 +97,55 @@ export class MemberDetailComponent implements OnInit {
     });
   }
 
-  sendMessage(){
-    this.messageService.sendMessage(this.member.username, this.messageContent).subscribe({
-      next: message => {
-        this.messages.push(message);
+  sendMessage() {
+    this.messageService
+      .sendMessage(this.member.username, this.messageContent)
+      .then(() => {
         this.messageForm.reset();
-      }
-    })
+      });
   }
 
   showTab(tab: string) {
     switch (tab) {
       case 'tab1':
+        this.messageService.stopHubConnection();
         this.tab1 = true;
         this.tab2 = false;
         this.tab3 = false;
         this.tab4 = false;
         break;
       case 'tab2':
+        this.messageService.stopHubConnection();
         this.tab2 = true;
         this.tab1 = false;
         this.tab3 = false;
         this.tab4 = false;
         break;
       case 'tab3':
+        this.messageService.stopHubConnection();
         this.tab3 = true;
         this.tab1 = false;
         this.tab2 = false;
         this.tab4 = false;
         break;
       case 'tab4':
-        if(this.messages.length == 0) {
+        if (this.messages.length == 0) {
           this.loadMessages();
+          this.messageService.createHubConnection(
+            this.user,
+            this.member.username
+          );
           this.tab4 = true;
           this.tab1 = false;
           this.tab2 = false;
           this.tab3 = false;
           break;
-        }
-        else{
+        } else {
+          this.loadMessages();
+          this.messageService.createHubConnection(
+            this.user,
+            this.member.username
+          );
           this.tab4 = true;
           this.tab1 = false;
           this.tab2 = false;
@@ -133,5 +155,9 @@ export class MemberDetailComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.messageService.stopHubConnection();
   }
 }
