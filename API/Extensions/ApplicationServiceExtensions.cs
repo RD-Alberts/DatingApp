@@ -20,17 +20,14 @@ namespace API.Extensions
 
             //add our own tokenservice
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
             //autmapper configuration
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
-            services.AddScoped<ILikesRepository, LikesRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddSignalR();
             services.AddSingleton<PresenceTracker>();
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }

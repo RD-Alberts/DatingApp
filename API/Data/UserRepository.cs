@@ -61,19 +61,19 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        public async Task<string> GetUserGender(string username)
+        {
+            return await _context.Users
+            .Where(x => x.UserName == username)
+            .Select(x => x.Gender).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             //Will only send the userdata by default. To also send the data related to it use Include
             return await _context.Users
             .Include(p => p.Photos)
             .ToListAsync();
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            //returns true if the changes are greater then zero
-            //which means that it will only save if there are actual changes
-            return await _context.SaveChangesAsync() > 0;
         }
 
         public void Update(AppUser appUser)
